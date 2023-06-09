@@ -19,7 +19,7 @@ public class Database {
     private static ConnectionSource connectionSource;
     private Dao<WatchlistEntity,Long> dao;
 
-    public Database()throws DatabaseException {
+    private Database()throws DatabaseException {
         try {
             createConnectionSource();
             dao = DaoManager.createDao(connectionSource, WatchlistEntity.class);

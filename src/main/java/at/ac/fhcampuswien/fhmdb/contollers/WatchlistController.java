@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class WatchlistController{
 
-    WatchlistRepository repository = new WatchlistRepository();
+    WatchlistRepository repository = WatchlistRepository.getInstance();
     private final ClickEventHandler<Movie> onAddToWatchlistClicked = (clickedItem) -> {
     try {
     repository.addToWatchlist(new WatchlistEntity(clickedItem));
