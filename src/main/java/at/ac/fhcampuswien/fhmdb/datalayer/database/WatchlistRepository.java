@@ -10,8 +10,17 @@ import java.util.List;
 public class WatchlistRepository {
     Dao<WatchlistEntity,Long> dao;
 
-    public WatchlistRepository() throws DatabaseException{
+    private static WatchlistRepository instance;
+
+    private WatchlistRepository() throws DatabaseException{
         this.dao = Database.getDatabase().getWatchlistDao();
+    }
+
+    public static WatchlistRepository getInstance() throws DatabaseException {
+        if(instance==null){
+            instance = new WatchlistRepository();
+        }
+        return instance;
     }
 
     public void removeFromWatchlist(WatchlistEntity movie) throws DatabaseException {
