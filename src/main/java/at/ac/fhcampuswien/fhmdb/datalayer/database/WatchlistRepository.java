@@ -18,7 +18,7 @@ public class WatchlistRepository implements ObservableWatchlist{
 
     private static WatchlistRepository instance;
 
-    public WatchlistRepository() throws DatabaseException{
+    private WatchlistRepository() throws DatabaseException{
         this.dao = Database.getDatabase().getWatchlistDao();
     }
 
