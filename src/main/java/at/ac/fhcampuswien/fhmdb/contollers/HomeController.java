@@ -88,7 +88,16 @@ public class HomeController implements Initializable {
 
     public SortedState sortedState;
 
-    public HomeController() throws DatabaseException {
+    private static HomeController instance;
+
+    private HomeController() throws DatabaseException {
+    }
+
+    public static HomeController getInstance() throws DatabaseException {
+        if(instance==null){
+            instance =  new HomeController();
+        }
+        return instance;
     }
 
     @Override
