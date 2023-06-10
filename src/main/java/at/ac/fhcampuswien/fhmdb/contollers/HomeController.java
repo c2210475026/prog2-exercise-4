@@ -8,6 +8,7 @@ import at.ac.fhcampuswien.fhmdb.datalayer.models.Movie;
 import at.ac.fhcampuswien.fhmdb.datalayer.models.SortedState;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.exceptions.MovieApiException;
+import at.ac.fhcampuswien.fhmdb.interfaces.ObserverWatchlist;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -23,12 +24,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, ObserverWatchlist {
     @FXML
     public JFXButton searchBtn;
     @FXML
@@ -91,6 +91,7 @@ public class HomeController implements Initializable {
     public SortedState sortedState;
 
     public HomeController() throws DatabaseException {
+        repository.addObserver(this);
     }
 
     @Override
@@ -384,5 +385,18 @@ public class HomeController implements Initializable {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void update(String message) {
+        //run later is required because otherwise it doesn't get shown
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Watchlist Update");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
+
+
+    }
 
 }
