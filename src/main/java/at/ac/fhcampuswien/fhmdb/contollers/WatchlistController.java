@@ -8,7 +8,7 @@ import at.ac.fhcampuswien.fhmdb.interfaces.ObserverWatchlist;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
-public class WatchlistController implements ObserverWatchlist{
+import java.sql.SQLException;
 
 
     WatchlistRepository repository = new WatchlistRepository();

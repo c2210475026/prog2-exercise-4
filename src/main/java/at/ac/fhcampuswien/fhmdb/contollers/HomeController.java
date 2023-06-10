@@ -52,7 +52,7 @@ public class HomeController implements Initializable, ObserverWatchlist {
     public JFXButton sortBtn;
 
     public List<Movie> allMovies;
-    WatchlistRepository repository = new WatchlistRepository();
+    WatchlistRepository repository = WatchlistRepository.getInstance();
 
     private final ClickEventHandler<Movie> onAddToWatchlistClicked = (clickedItem) -> {
         try {
