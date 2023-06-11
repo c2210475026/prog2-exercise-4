@@ -49,20 +49,4 @@ public class MovieAPI {
         }
 
     }
-
-    public Movie requestMovieById(UUID id)throws MovieApiException{
-        String url = new MovieAPIRequestBuilder(URL).id(id).build();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            Gson gson = new Gson();
-            return gson.fromJson(response.body().string(), Movie.class);
-        } catch (Exception e) {
-            throw new MovieApiException("requestMovieByID failed/n"+ e.getCause());
-        }
-
-        //return null;
-    }
 }

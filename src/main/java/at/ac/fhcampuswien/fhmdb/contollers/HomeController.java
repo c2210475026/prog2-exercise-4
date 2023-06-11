@@ -5,7 +5,6 @@ import at.ac.fhcampuswien.fhmdb.datalayer.database.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.datalayer.database.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.datalayer.models.Genre;
 import at.ac.fhcampuswien.fhmdb.datalayer.models.Movie;
-import at.ac.fhcampuswien.fhmdb.datalayer.models.SortedState;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.exceptions.MovieApiException;
 import at.ac.fhcampuswien.fhmdb.interfaces.ObserverWatchlist;
@@ -28,7 +27,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -270,44 +268,6 @@ public class HomeController implements Initializable, ObserverWatchlist {
     public void sortDescending(){
         currentState = new DescendingState();
         sortMovies();
-    }
-
-    public List<Movie> filterByQuery(List<Movie> movies, String query){
-        if(query == null || query.isEmpty()) return movies;
-
-        if(movies == null) {
-            throw new IllegalArgumentException("movies must not be null");
-        }
-
-        return movies.stream().filter(movie ->
-                movie.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                movie.getDescription().toLowerCase().contains(query.toLowerCase()))
-                .toList();
-    }
-
-    public List<Movie> filterByGenre(List<Movie> movies, Genre genre){
-        if(genre == null) return movies;
-
-        if(movies == null) {
-            throw new IllegalArgumentException("movies must not be null");
-        }
-
-        return movies.stream().filter(movie -> movie.getGenres().contains(genre)).toList();
-    }
-
-    public void applyAllFilters(String searchQuery, Object genre) {
-        List<Movie> filteredMovies = allMovies;
-
-        if (!searchQuery.isEmpty()) {
-            filteredMovies = filterByQuery(filteredMovies, searchQuery);
-        }
-
-        if (genre != null && !genre.toString().equals("No filter")) {
-            filteredMovies = filterByGenre(filteredMovies, Genre.valueOf(genre.toString()));
-        }
-
-        observableMovies.clear();
-        observableMovies.addAll(filteredMovies);
     }
 
     public void searchBtnClicked(ActionEvent actionEvent) {

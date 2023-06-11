@@ -3,7 +3,6 @@ package at.ac.fhcampuswien.fhmdb;
 import at.ac.fhcampuswien.fhmdb.contollers.HomeController;
 import at.ac.fhcampuswien.fhmdb.datalayer.models.Genre;
 import at.ac.fhcampuswien.fhmdb.datalayer.models.Movie;
-import at.ac.fhcampuswien.fhmdb.datalayer.models.SortedState;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.exceptions.MovieApiException;
 import org.junit.jupiter.api.BeforeAll;
