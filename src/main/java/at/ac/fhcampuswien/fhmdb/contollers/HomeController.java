@@ -97,15 +97,14 @@ public class HomeController implements Initializable, ObserverWatchlist {
 
     private HomeController() throws DatabaseException {
         instance = this;
+        repository.addObserver(this);
     }
 
     public static HomeController getInstance() throws DatabaseException {
-        if(instance==null){
-            instance =  new HomeController();
+        if (instance == null) {
+            instance = new HomeController();
         }
         return instance;
-    public HomeController() throws DatabaseException {
-        repository.addObserver(this);
     }
 
     @Override
