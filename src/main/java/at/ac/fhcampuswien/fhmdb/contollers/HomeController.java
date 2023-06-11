@@ -5,6 +5,7 @@ import at.ac.fhcampuswien.fhmdb.datalayer.database.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.datalayer.database.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.datalayer.models.Genre;
 import at.ac.fhcampuswien.fhmdb.datalayer.models.Movie;
+import at.ac.fhcampuswien.fhmdb.datalayer.models.SortedState;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.exceptions.MovieApiException;
 import at.ac.fhcampuswien.fhmdb.interfaces.ObserverWatchlist;
@@ -27,6 +28,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -91,6 +93,17 @@ public class HomeController implements Initializable, ObserverWatchlist {
 
 
 
+    private static HomeController instance;
+
+    private HomeController() throws DatabaseException {
+        instance = this;
+    }
+
+    public static HomeController getInstance() throws DatabaseException {
+        if(instance==null){
+            instance =  new HomeController();
+        }
+        return instance;
     public HomeController() throws DatabaseException {
         repository.addObserver(this);
     }
