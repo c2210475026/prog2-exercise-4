@@ -5,7 +5,6 @@ import at.ac.fhcampuswien.fhmdb.datalayer.database.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.datalayer.database.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.datalayer.models.Genre;
 import at.ac.fhcampuswien.fhmdb.datalayer.models.Movie;
-import at.ac.fhcampuswien.fhmdb.datalayer.models.SortedState;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.exceptions.MovieApiException;
 import at.ac.fhcampuswien.fhmdb.interfaces.ObserverWatchlist;
@@ -51,9 +50,6 @@ public class HomeController implements Initializable, ObserverWatchlist {
 
     @FXML
     public JFXComboBox ratingFromComboBox;
-
-
-
 
     private SortState currentState;
     public List<Movie> allMovies;
@@ -263,28 +259,7 @@ public class HomeController implements Initializable, ObserverWatchlist {
         currentState = new DescendingState();
         sortMovies();
     }
-/*
 
-    public void sortMovies(){
-        if (sortedState == SortedState.NONE || sortedState == SortedState.DESCENDING) {
-            sortMovies(SortedState.ASCENDING);
-        } else if (sortedState == SortedState.ASCENDING) {
-            sortMovies(SortedState.DESCENDING);
-        }
-    }
-    // sort movies based on sortedState
-    // by default sorted state is NONE
-    // afterwards it switches between ascending and descending
-    public void sortMovies(SortedState sortDirection) {
-        if (sortDirection == SortedState.ASCENDING) {
-            observableMovies.sort(Comparator.comparing(Movie::getTitle));
-            sortedState = SortedState.ASCENDING;
-        } else {
-            observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
-            sortedState = SortedState.DESCENDING;
-        }
-    }
-*/
     public List<Movie> filterByQuery(List<Movie> movies, String query){
         if(query == null || query.isEmpty()) return movies;
 
