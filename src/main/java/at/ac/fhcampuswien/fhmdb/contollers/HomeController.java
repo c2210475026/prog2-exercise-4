@@ -9,6 +9,10 @@ import at.ac.fhcampuswien.fhmdb.datalayer.models.SortedState;
 import at.ac.fhcampuswien.fhmdb.exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.exceptions.MovieApiException;
 import at.ac.fhcampuswien.fhmdb.interfaces.ObserverWatchlist;
+import at.ac.fhcampuswien.fhmdb.statePatterns.AscendingState;
+import at.ac.fhcampuswien.fhmdb.statePatterns.DescendingState;
+import at.ac.fhcampuswien.fhmdb.statePatterns.SortState;
+import at.ac.fhcampuswien.fhmdb.statePatterns.UnsortedState;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -48,9 +52,10 @@ public class HomeController implements Initializable, ObserverWatchlist {
     @FXML
     public JFXComboBox ratingFromComboBox;
 
-    @FXML
-    public JFXButton sortBtn;
 
+
+
+    private SortState currentState;
     public List<Movie> allMovies;
     WatchlistRepository repository = WatchlistRepository.getInstance();
 
@@ -88,7 +93,7 @@ public class HomeController implements Initializable, ObserverWatchlist {
 
     public ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
 
-    public SortedState sortedState;
+
 
     public HomeController() throws DatabaseException {
         repository.addObserver(this);
@@ -122,10 +127,10 @@ public class HomeController implements Initializable, ObserverWatchlist {
 
             List<Movie> result = MovieAPI.getAllMovies();
 
-
+        currentState = new UnsortedState();
         setMovies(result);
         setMovieList(result);
-        sortedState = SortedState.NONE;
+
 
         // test stream methods
         System.out.println("getMostPopularActor");
@@ -246,8 +251,19 @@ public class HomeController implements Initializable, ObserverWatchlist {
 
     }
 
+    public void sortMovies(){
+        currentState.sortMovies(observableMovies);
+    }
 
-
+    public void sortAscending(){
+        currentState = new AscendingState();
+        sortMovies();
+    }
+    public void sortDescending(){
+        currentState = new DescendingState();
+        sortMovies();
+    }
+/*
 
     public void sortMovies(){
         if (sortedState == SortedState.NONE || sortedState == SortedState.DESCENDING) {
@@ -268,7 +284,7 @@ public class HomeController implements Initializable, ObserverWatchlist {
             sortedState = SortedState.DESCENDING;
         }
     }
-
+*/
     public List<Movie> filterByQuery(List<Movie> movies, String query){
         if(query == null || query.isEmpty()) return movies;
 
@@ -323,7 +339,6 @@ public class HomeController implements Initializable, ObserverWatchlist {
         setMovieList(movies);
         // applyAllFilters(searchQuery, genre);
 
-        sortMovies(sortedState);
     }
 
     public String validateComboboxValue(Object value) {
@@ -348,9 +363,6 @@ public class HomeController implements Initializable, ObserverWatchlist {
 
     }
 
-    public void sortBtnClicked(ActionEvent actionEvent) {
-        sortMovies();
-    }
 
     // count which actor is in the most movies
     public String getMostPopularActor(List<Movie> movies) {

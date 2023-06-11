@@ -31,7 +31,8 @@
    </HBox>
    <HBox spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
       <children>
-         <JFXButton fx:id="sortBtn" onAction="#sortBtnClicked" styleClass="background-yellow" stylesheets="@styles.css" text="Sort" />
+         <JFXButton fx:id="ascending" onAction="#sortAscending" styleClass="background-yellow" stylesheets="@styles.css" text="ascending" />
+         <JFXButton fx:id="descending" onAction="#sortDescending" styleClass="background-yellow" stylesheets="@styles.css" text="descending" />
          <TextField fx:id="searchField" prefHeight="25.0" prefWidth="170.0" promptText="Search FHMDb" />
          <JFXComboBox fx:id="genreComboBox" focusColor="#f5c518" styleClass="filter-combo-box" stylesheets="@styles.css" />
          <JFXComboBox fx:id="releaseYearComboBox" focusColor="#f5c518" styleClass="filter-combo-box" stylesheets="@styles.css" />
