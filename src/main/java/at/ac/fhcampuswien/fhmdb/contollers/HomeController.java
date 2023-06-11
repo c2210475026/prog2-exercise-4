@@ -91,6 +91,7 @@ public class HomeController implements Initializable {
     private static HomeController instance;
 
     private HomeController() throws DatabaseException {
+        instance = this;
     }
 
     public static HomeController getInstance() throws DatabaseException {
